@@ -1,3 +1,5 @@
+import extensions._
+
 import scala.scalajs.js.JSON
 import scala.scalajs.js.annotation.JSExportTopLevel
 
@@ -5,17 +7,18 @@ object MainApp extends App {
 
   @JSExportTopLevel("loop")
   def main(): Unit = {
-    import facade.Game.utils._
     import facade.Game.constants._
     import facade.Game.prototypes._
+    import facade.Game.utils._
+
     println(s"current ticks: ${getTicks()}")
 
     val creepsOpt = getObjectsByPrototype(Creep)
     creepsOpt.foreach(creeps => {
-      val (myCreeps, enemies) = creeps.toList.partition(_.my)
+      val (myCreeps, enemies) = creeps.partition(_.my)
       val enemy = enemies.head
       println(s"enemy ${JSON.stringify(enemy)}")
-      myCreeps.groupBy(_.body.head.`type`).foreach {
+      myCreeps.groupByDictionary(_.body.head.`type`).foreach {
         case (RANGED_ATTACK, creeps) => creeps.foreach(creep => {
             println(s"${JSON.stringify(creep)} rangedAttacking")
             val code = creep.rangedAttack(enemy)
