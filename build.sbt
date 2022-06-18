@@ -12,5 +12,6 @@ lazy val root = project.in(file(".")).enablePlugins(ScalaJSPlugin).settings(
   libraryDependencies ++= Seq("org.scalatest" %%% "scalatest" % "3.2.11" % "test"
 //      "org.typelevel" %%% "cats-core" % "2.3.0"
   ),
-  scalaJSUseMainModuleInitializer := true
+  scalaJSUseMainModuleInitializer := true,
+  scalaJSStage := FullOptStage
 )
